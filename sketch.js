@@ -8,7 +8,7 @@ var holder,ball,ground;
 var stand1,stand2;
 var ball;
 var slingShot;
-var polygon, poly, polygon_img;
+var  poly, polygon_img,polygon;
 function preload(){
   polygon_img=loadImage("polygon.png");
 }
@@ -43,9 +43,10 @@ function setup() {
   //top
   block16 = new Block(390,155,30,40);
 
-  polygon = new Bodies.circle(50, 200, 20)
-  World.add(world, polygon)
-  poly = new Polygon(polygon.body, {x: 100,y: 200});
+  ball = new Bodies.circle(150, 150, 20)
+  World.add(world, ball)
+
+slingShot = new Polygon(this.ball, {x: 150,y: 150});
 
 }
 function draw() {
@@ -53,7 +54,8 @@ function draw() {
  
   textSize(20);
   fill("lightyellow");
-  
+  text("Drag the Hexagonal Stone and Release it, to launch it towards the blocks",100,30);
+
   ground.display();
   stand1.display();
   
@@ -80,14 +82,17 @@ function draw() {
   fill("grey");
   block16.display();
 
-  polygon.display();
-  poly.display();
+  imageMode(CENTER)
+  image(polygon_img ,ball.position.x,ball.position.y,40,40);
+
+  slingShot.display();
+ 
 }
 
 function mouseDragged(){
-  Matter.Body.setPosition(polygon.body, {x:mouseX,y:mouseY});
+  Matter.Body.setPosition(this.ball, {x:mouseX,y:mouseY});
 }
 
 function mouseReleased(){
-  Polygon.fly();
+  slingShot.fly();
 }
